@@ -21,6 +21,7 @@ class EmployeesListItem extends Component {
         this.setState(({star}) => ({
             star: !star
         }))
+
     }
 
     render() {
