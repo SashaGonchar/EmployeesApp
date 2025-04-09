@@ -22,6 +22,8 @@ class App extends Component {
         this.maxId = 5;
     }
 
+    ///реализовать учет сотрудников и передать как пропс в епп инфо
+
     deleteItem = (id) => {
         this.setState(({data}) => {
 
@@ -50,6 +52,15 @@ class App extends Component {
     }
 
     onToggleIncrease = (id) => {
+
+        this.setState(({data}) => ({
+            data: data.map(item => {
+                if (item.id === id){
+                    return {...item, increase: !item.increase}
+                }
+                return item;
+            })
+        }))
         //  this.setState(({data}) => {
         //     const index = data.findIndex(elem => elem.id === id);
         //      const old = data[index];
@@ -61,24 +72,23 @@ class App extends Component {
         //   }
         // })
 
+    }
+
+    onToggleRise = (id) => {
         this.setState(({data}) => ({
             data: data.map(item => {
                 if (item.id === id){
-                    return {...item, increase: !item.increase}
+                    return {...item, rise: !item.rise}
                 }
                 return item;
             })
         }))
     }
 
-    onToggleRise = (id) => {
-        console.log(`Rise this ${id}`);
-    }
-
     render() {
         return (
             <div className={"app"}>
-                <AppInfo/>
+                <AppInfo data={this.state.data}/>
 
                 <div className="search-panel">
                     <SearchPanel/>
