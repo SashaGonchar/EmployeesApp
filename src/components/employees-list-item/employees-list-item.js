@@ -1,50 +1,26 @@
 import './employers-list-item.css';
-import {Component} from "react";
 
-class EmployeesListItem extends Component {
+const EmployeesListItem = (props) =>{
 
-    constructor(props){
-        super(props);
-        this.state = {
-            increase:false,
-            star:false
-        }
-    }
+        const {name, salary, onDelete, onToggleIncrease, onToggleRise, increase, rise} = props;
 
-    onIncrease = () => {
-        this.setState(({increase}) => ({
-            increase: !increase
-        }))
-    }
-
-    onStar = () => {
-        this.setState(({star}) => ({
-            star: !star
-        }))
-
-    }
-
-    render() {
-
-        const {name, salary, onDelete} = this.props;
-        const {increase, star} = this.state;
 
         let classNames = "list-group-item d-flex justify-content-between";
         if (increase) {
             classNames = classNames + ' increase'
         }
-        if (star) {
+        if (rise) {
             classNames = classNames + ' like'
         }
 
         return (
             <li className={classNames}>
-                <span className={"list-group-item-label"} onClick={this.onStar}>{name}</span>
+                <span className={"list-group-item-label"} onClick={onToggleRise}>{name}</span>
                 <input type={"text"} className={"list-group-item-input"} defaultValue={salary + '$'}/>
                 <div className={"d-flex justify-content-center align-items-center"}>
                     <button type={"button"}
                             className={"btn-cookie btn-sm"}
-                            onClick={this.onIncrease}>
+                            onClick={onToggleIncrease}>
                         <i className={"fas fa-cookie"}></i>
                     </button>
                     <button type={"button"}
@@ -55,9 +31,7 @@ class EmployeesListItem extends Component {
                     <i className={"fas fa-star"}></i>
                 </div>
             </li>
-        )}
-
-
+        )
 }
 
 export default EmployeesListItem;
