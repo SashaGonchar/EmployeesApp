@@ -18,12 +18,13 @@ class App extends Component {
                 {name: "Nick Pick", salary:7000, increase: false, rise: false, id: 3 },
                 {name: "Dark Rick", salary:3000, increase: false, rise: false, id: 4 },
             ],
-            term:''
+            term:'',
+            activeFilter:'allSalary',
         }
         this.maxId = 5;
     }
 
-    ///реализовать учет сотрудников и передать как пропс в епп инфо
+    ///реализовать фильтр
 
     deleteItem = (id) => {
         this.setState(({data}) => {
@@ -77,8 +78,14 @@ class App extends Component {
     }
 
     onUpdateSearch = (term) => {
-        this.setState({term: term})
+        this.setState({term})
     }
+
+    onActiveFilter = (activeFilter) => {
+        this.setState({activeFilter})
+    }
+
+
 
     render() {
         const {data, term} = this.state
@@ -89,7 +96,7 @@ class App extends Component {
 
                 <div className="search-panel">
                     <SearchPanel onUpdateSearch={this.onUpdateSearch}/>
-                    <AppFilter/>
+                    <AppFilter onActiveFilter={this.onActiveFilter}/>
                 </div>
                 <EmployeesList
                     data={visibleData}
