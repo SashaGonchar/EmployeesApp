@@ -13,13 +13,13 @@ class App extends Component {
         super(props);
         this.state = {
             data: [
-                {name: "John Wick", salary:8000, increase: false, rise: true, id: 1 },
-                {name: "Joe Biden", salary:10000, increase: true, rise: false, id: 2 },
-                {name: "Nick Pick", salary:7000, increase: false, rise: false, id: 3 },
-                {name: "Dark Rick", salary:3000, increase: false, rise: false, id: 4 },
+                {name: "John Wick", salary: 8000, increase: false, rise: true, id: 1},
+                {name: "Joe Biden", salary: 10000, increase: true, rise: false, id: 2},
+                {name: "Nick Pick", salary: 7000, increase: false, rise: false, id: 3},
+                {name: "Dark Rick", salary: 3000, increase: false, rise: false, id: 4},
             ],
-            term:'',
-            activeFilter:'allSalary',
+            term: '',
+            activeFilter: 'allSalary',
         }
         this.maxId = 5;
     }
@@ -30,7 +30,7 @@ class App extends Component {
         this.setState(({data}) => {
 
             return {
-            data: data.filter(item => item.id !== id)
+                data: data.filter(item => item.id !== id)
             }
 
         })
@@ -57,7 +57,7 @@ class App extends Component {
 
         this.setState(({data}) => ({
             data: data.map(item => {
-                if (item.id === id){
+                if (item.id === id) {
                     return {...item, [prop]: !item[prop]}
                 }
                 return item;
@@ -70,10 +70,9 @@ class App extends Component {
             return items;
         }
 
-        return items.filter (item => {
-            return item.name.indexOf(term) > -1
+        return items.filter(item => {
+                return item.name.indexOf(term) > -1
             }
-
         )
     }
 
@@ -85,11 +84,26 @@ class App extends Component {
         this.setState({activeFilter})
     }
 
+    setDataFilter = (data, activeFilter) => {
+        if (activeFilter === "allSalary") {
+            return data;
+        }
 
+        if (activeFilter === "riseSalary") {
+            return data.filter(item => item.rise === true);
+        }
+
+        if (activeFilter === "bigSalary") {
+            return data.filter(item => item.salary > 1000);
+        }
+    }
 
     render() {
-        const {data, term} = this.state
-        const visibleData = this.searchEmp(data, term);
+        const {data, term, activeFilter} = this.state
+        const filteredData = this.setDataFilter(data,activeFilter);
+        console.log(data)
+        console.log(filteredData)
+        const visibleData = this.searchEmp(filteredData, term);
         return (
             <div className={"app"}>
                 <AppInfo data={this.state.data}/>
