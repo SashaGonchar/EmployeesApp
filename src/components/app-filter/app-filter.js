@@ -1,5 +1,5 @@
 import './app-filter.css';
-import {Component } from "react";
+import {Component} from "react";
 
 class AppFilter extends Component {
     constructor(props) {
@@ -16,23 +16,26 @@ class AppFilter extends Component {
     }
 
     render() {
-        const allSalary = "allSalary"
-        const riseSalary = "riseSalary"
-        const bigSalary = "bigSalary"
-        const activeFilter = this.state.activeFilter
-
+        const buttonsData = [
+            {name: 'allSalary', label: 'Все сотрудники'},
+            {name: 'riseSalary', label: 'На повышение'},
+            {name: 'bigSalary', label: 'Зп больше 1000$'},
+        ];
+        const buttons = buttonsData.map(({name, label}) => {
+            const active = this.state.activeFilter === name
+            const clazz = active ? " btn-light" : " btn-outline-light"
+            return (<button
+                type={"button"}
+                className={`btn ${clazz}`}
+                data-toggle={name}
+                onClick={this.onActiveFilter}
+            >{label}</button>)
+        })
         return (
             <div className={"btn-group"}>
-                <button className={"btn" + (allSalary === activeFilter ? " btn-light" : " btn-outline-light")} type={"button"} data-toggle={allSalary} onClick={this.onActiveFilter}>
-                    Все сотрудники
-                </button>
-                <button className={"btn " + (riseSalary === activeFilter ? " btn-light" : " btn-outline-light")} type={"button"} data-toggle={riseSalary} onClick={this.onActiveFilter}>
-                    На повышение
-                </button>
-                <button className={"btn " + (bigSalary === activeFilter ? " btn-light" : " btn-outline-light")} type={"button"} data-toggle={bigSalary} onClick={this.onActiveFilter}>
-                    Зп больше 1000$
-                </button>
+                {buttons}
             </div>
+
         )
     }
 }

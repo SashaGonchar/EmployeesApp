@@ -24,8 +24,6 @@ class App extends Component {
         this.maxId = 5;
     }
 
-    ///реализовать фильтр
-
     deleteItem = (id) => {
         this.setState(({data}) => {
 
@@ -85,25 +83,23 @@ class App extends Component {
     }
 
     setDataFilter = (data, activeFilter) => {
-        if (activeFilter === "allSalary") {
-            return data;
-        }
+        switch (activeFilter) {
 
-        if (activeFilter === "riseSalary") {
-            return data.filter(item => item.rise === true);
-        }
+            case ("allSalary"):
+            default:
+                return data;
 
-        if (activeFilter === "bigSalary") {
-            return data.filter(item => item.salary > 1000);
+            case ("riseSalary"):
+                return data.filter(item => item.rise === true);
+
+            case ("bigSalary"):
+                return data.filter(item => item.salary > 1000);
         }
-    }
+    };
 
     render() {
         const {data, term, activeFilter} = this.state
-        const filteredData = this.setDataFilter(data,activeFilter);
-        console.log(data)
-        console.log(filteredData)
-        const visibleData = this.searchEmp(filteredData, term);
+        const visibleData = this.searchEmp(this.setDataFilter(data, activeFilter), term);
         return (
             <div className={"app"}>
                 <AppInfo data={this.state.data}/>
